@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writer Login</title>
+    <style>
+        :root {
+            --primary-blue: rgb(12, 81, 256);
+            --hover-blue: rgb(10, 70, 220);
+            --active-blue: rgb(8, 60, 200);
+            --light-blue: rgba(12, 81, 256, 0.1);
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #777777;
+            --error-red: #ff4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, var(--light-blue) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, var(--light-blue) 0%, transparent 20%);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, var(--light-blue), transparent);
+            transform: rotate(45deg);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 30px;
+            width: 120px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #333;
+            font-weight: 600;
+            font-size: 28px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: var(--light-gray);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(12, 81, 256, 0.2);
+            background-color: var(--white);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+            accent-color: var(--primary-blue);
+        }
+
+        .forgot-password a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+            color: var(--hover-blue);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--hover-blue);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(12, 81, 256, 0.2);
+        }
+
+        .btn-primary:active {
+            background-color: var(--active-blue);
+            transform: translateY(0);
+        }
+
+        .btn-google {
+            background-color: var(--white);
+            color: #555;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .btn-google:hover {
+            background-color: var(--light-gray);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-google:active {
+            background-color: var(--medium-gray);
+            transform: translateY(0);
+        }
+
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--medium-gray);
+        }
+
+        .divider::before {
+            margin-right: 16px;
+        }
+
+        .divider::after {
+            margin-left: 16px;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .signup-link a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+            color: var(--hover-blue);
+        }
+
+        .error-message {
+            color: var(--error-red);
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+                margin: 0 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src=".images/logop_123.jpg" alt="Logo" class="logo">
+        <h1>Welcome Back</h1>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <div id="emailError" class="error-message"></div>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <div id="passwordError" class="error-message"></div>
+            </div>
+            
+            <div class="options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" id="loginBtn">
+                <span id="loginText">Login</span>
+            </button>
+            
+            <div id="formError" class="error-message" style="text-align: center; margin-bottom: 16px;"></div>
+        </form>
+        
+        <div class="divider">or continue with</div>
+        
+        <button class="btn btn-google" id="googleLoginBtn">
+            <svg class="google-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px">
+                <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+            </svg>
+            Sign in with Google
+        </button>
+        
+        <div class="signup-link">
+            Don't have an account? <a href="#">Sign up</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const googleLoginBtn = document.getElementById('googleLoginBtn');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const formError = document.getElementById('formError');
+            
+            // Regular login form submission
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Reset error messages
+                emailError.style.display = 'none';
+                passwordError.style.display = 'none';
+                formError.style.display = 'none';
+                
+                // Get form values
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('remember').checked;
+                
+                // Simple validation
+                let isValid = true;
+                
+                if (!email) {
+                    emailError.textContent = 'Email is required';
+                    emailError.style.display = 'block';
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    emailError.textContent = 'Please enter a valid email address';
+                    emailError.style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (!password) {
+                    passwordError.textContent = 'Password is required';
+                    passwordError.style.display = 'block';
+                    isValid = false;
+                } else if (password.length < 6) {
+                    passwordError.textContent = 'Password must be at least 6 characters';
+                    passwordError.style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (!isValid) return;
+                
+                // Prepare data for API
+                const loginData = {
+                    email: email,
+                    password: password,
+                    remember: rememberMe
+                };
+                
+                // Show loading state
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<div class="loading"></div><span>Logging in...</span>';
+                
+                try {
+                    const response = await fetch('/api/writer/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(loginData)
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Login failed');
+                    }
+                    
+                    // Login successful - redirect or handle success
+                    window.location.href = '/dashboard'; // Change to your success route
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    formError.textContent = error.message || 'An error occurred during login. Please try again.';
+                    formError.style.display = 'block';
+                    
+                    // Shake animation for error
+                    loginForm.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        loginForm.style.animation = '';
+                    }, 500);
+                } finally {
+                    // Reset button state
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<span id="loginText">Login</span>';
+                }
+            });
+            
+            // Google login button handler
+            googleLoginBtn.addEventListener('click', function() {
+                // In a real app, this would trigger Google OAuth flow
+                console.log('Google login clicked');
+                
+                // For demo purposes, show a message
+                formError.textContent = 'Google login would normally redirect to OAuth provider';
+                formError.style.display = 'block';
+                formError.style.color = 'var(--primary-blue)';
+                
+                // You would typically use something like:
+                // window.location.href = '/auth/google';
+                // or use Firebase Auth, Auth0, etc.
+            });
+            
+            // Add shake animation for errors
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
