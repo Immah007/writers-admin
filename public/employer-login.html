@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writer Login | Content Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0000ff;
+            --dark-blue: #0000cc;
+            --pure-white: #ffffff;
+            --light-bg: #f8fafc;
+            --border-gray: #e2e8f0;
+            --text-dark: #1e293b;
+            --text-medium: #64748b;
+            --error-red: #ef4444;
+            --success-green: #10b981;
+            --toast-yellow: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            padding: 48px;
+            background-color: var(--pure-white);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: block;
+            margin: 0 auto 30px;
+            width: 48px;
+            height: 48px;
+            color: var(--primary-blue);
+            font-size: 40px;
+            text-align: center;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-header h1 {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: var(--text-medium);
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-field {
+            position: relative;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 10px 46px 10px 14px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            background-color: var(--pure-white);
+            color: var(--text-dark);
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 0, 255, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .input-icon:hover {
+            color: var(--primary-blue);
+        }
+
+        .input-field input:focus ~ .input-icon {
+            color: var(--primary-blue);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 12px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            margin-right: 8px;
+            appearance: none;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .remember-me input:checked {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .remember-me input:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 2px;
+            top: 1px;
+            color: white;
+            font-size: 10px;
+        }
+
+        .forgot-password a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+            color: white;
+            border: none;
+            margin-bottom: 16px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, var(--dark-blue), var(--primary-blue));
+        }
+
+        .btn-icon {
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .btn-google {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+        }
+
+        .btn-google:hover {
+            border-color: var(--primary-blue);
+            background-color: rgba(0, 0, 255, 0.05);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            color: var(--text-medium);
+            font-size: 13px;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-gray);
+        }
+
+        .divider::before {
+            margin-right: 12px;
+        }
+
+        .divider::after {
+            margin-left: 12px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .auth-footer a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error-container {
+            padding: 12px 16px;
+            background-color: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            color: var(--error-red);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .error-icon {
+            margin-right: 8px;
+        }
+
+        .employer-login {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+        }
+
+        .employer-login a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .employer-login a:hover {
+            text-decoration: underline;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background-color: var(--toast-yellow);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 32px 24px;
+            }
+            
+            .login-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <i class="fas fa-pen-fancy logo"></i>
+        
+        <div class="login-header">
+            <h1>Welcome back!</h1>
+            <p>All your writers and articles in one place!</p>
+        </div>
+        
+        <div id="errorContainer" class="error-container">
+            <p class="error-message">
+                <i class="fas fa-exclamation-circle error-icon"></i>
+                <span id="errorText"></span>
+            </p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Email address</label>
+                <div class="input-field">
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="input-field">
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
+                    <i id="togglePassword" class="fas fa-eye input-icon password-toggle"></i>
+                </div>
+            </div>
+            
+            <div class="options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="#" id="forgotPasswordLink">Forgot password?</a>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" id="loginBtn">
+                <i class="fas fa-arrow-right btn-icon"></i>
+                Sign in
+            </button>
+        </form>
+        
+        <div class="divider">OR</div>
+        
+        <button class="btn btn-google" id="googleLoginBtn">
+            <i class="fab fa-google btn-icon"></i>
+            Continue with Google
+        </button>
+        
+        <div class="employer-login">
+            Are you a writer? <a href="#" id="employerLoginLink">Log in here</a>
+        </div>
+        
+        <div class="auth-footer">
+            No account yet? <a href="#" id="signupLink">Sign up</a>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">
+        <i class="fas fa-exclamation-circle toast-icon"></i>
+        <span id="toastMessage">Google login isn't available. Please use password</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const googleLoginBtn = document.getElementById('googleLoginBtn');
+            const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+            const employerLoginLink = document.getElementById('employerLoginLink');
+            const signupLink = document.getElementById('signupLink');
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const errorContainer = document.getElementById('errorContainer');
+            const errorText = document.getElementById('errorText');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+
+            // Toggle password visibility
+            let passwordVisible = false;
+            togglePassword.addEventListener('click', function() {
+                passwordVisible = !passwordVisible;
+                passwordInput.type = passwordVisible ? 'text' : 'password';
+                togglePassword.classList.toggle('fa-eye');
+                togglePassword.classList.toggle('fa-eye-slash');
+            });
+            
+            // Form submission
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                errorContainer.style.display = 'none';
+                
+                // Get values
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('remember').checked;
+                
+                // Validation
+                if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('Please enter a valid email address');
+                    return;
+                }
+                
+                if (!password || password.length < 8) {
+                    showError('Password must be at least 8 characters');
+                    return;
+                }
+                
+                // UI Loading state
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = `
+                    <i class="fas fa-spinner fa-spin btn-icon"></i>
+                    Signing in...
+                `;
+                
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    // Mock success - we wil definitely replace with actual API call
+                    // const response = await fetch('/api/employer-login', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    //     body: JSON.stringify({
+                    //         email: email,
+                    //         password: password,
+                    //         remember: rememberMe
+                    //     })
+                    // });
+                    // const data = await response.json();
+                    // if (!response.ok) throw new Error(data.message || 'Login failed');
+                    
+                    // Redirect to dashboard
+                    window.location.href = '/dashboard';
+                    //haha, good stuff, innit? 
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    showError(error.message || 'An error occurred during login');
+                } finally {
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = `
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                        Sign in
+                    `;
+                }
+            });
+            
+            function showError(message) {
+                errorText.textContent = message;
+                errorContainer.style.display = 'block';
+            }
+            
+            function showToast(message) {
+                toastMessage.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Button handlers
+            googleLoginBtn.addEventListener('click', function() {
+                showToast("Google login isn't available. Please use password");
+            });
+            
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showError('Password reset flow would initiate here');
+            });
+            
+            employerLoginLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showError('Redirecting to employer login...');
+            });
+            
+            signupLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showError('Redirecting to signup page...');
+            });
+        });
+    </script>
+</body>
+</html>
